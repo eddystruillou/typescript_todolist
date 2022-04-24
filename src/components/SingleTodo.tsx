@@ -11,20 +11,30 @@ type Props = {
 }
 
 const SingleTodo: React.FC<Props> = ({ todo, todos, setTodos }) => {
-  return <form action="" className="todos__single">
-      <span className="todos__single--text">{todo.todo}</span>
-      <div>
-          <span className="icon">
-              <AiFillEdit />
-          </span>
-          <span className="icon">
-              <AiFillDelete />
-          </span>
-          <span className="icon">
-              <MdDone />
-          </span>
-      </div>
-  </form>
+    const handleDone = (id: number) => {
+        setTodos(todos.map((todo) =>
+            todo.id === id ? { ...todo, isDone: !todo.isDone } : todo
+        ))
+    }
+
+    return <form action="" className="todos__single">
+        {todo.isDone ? (
+            <s className="todos__single--text">{todo.todo}</s>
+        ) : (
+            <span className="todos__single--text">{todo.todo}</span>
+        )}
+        <div>
+            <span className="icon">
+                <AiFillEdit />
+            </span>
+            <span className="icon">
+                <AiFillDelete />
+            </span>
+            <span className="icon">
+                <MdDone onClick={() => handleDone(todo.id)} />
+            </span>
+        </div>
+    </form>
 }
 
 export default SingleTodo
